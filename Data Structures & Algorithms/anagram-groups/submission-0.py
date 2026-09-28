@@ -1,0 +1,24 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        def is_anagram(a, b): # O(n)
+            if len(a) != len(b): return False
+            asort = sorted(list(a))
+            bsort = sorted(list(b))
+            for c1, c2 in zip(asort, bsort): 
+                if c1 != c2: return False
+            return True
+
+        res = []
+        processed = {}
+        for idx, s1 in enumerate(strs): 
+            if s1 not in processed:
+                anagram_of_i = [s1]
+                processed[s1] = 1
+                for jdx, s2 in enumerate(strs[idx+1:]): 
+                    if is_anagram(s1, s2): 
+                        anagram_of_i.append(s2)
+                        processed[s2] = 1
+                res.append(anagram_of_i)
+        return res
+                
+
